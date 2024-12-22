@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Navidad</title>
+    <link rel="icon" type="image/png" href="./images.png">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: url('./feli.gif') repeat;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-size: 100% 100%;
+
+        }
+
+        /* Nieve cayendo */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            width: 10px;
+            height: 10px;
+            animation: fall 10s linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        /* Regalo antes de abrir la tarjeta */
+        .gift {
+            width: 120px;
+            height: 120px;
+            background-color: #d32f2f;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .gift:before {
+            content: '👉🎁 ...Abrir';
+            font-size: 40px;
+        }
+        
+
+        /* Animación de apertura del regalo */
+        .gift.animate {
+            animation: open 1s forwards;
+        }
+
+        @keyframes open {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(0);
+            }
+        }
+
+        /* Tarjeta */
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            position: relative;
+        }
+
+        .card.show {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Luces navideñas */
+        .lights {
+            width: 100%;
+            height: 15px;
+            background: repeating-linear-gradient(45deg, red 0 10px, green 10px 20px);
+            border-radius: 5px;
+            margin-bottom: 10px;
+            animation: blink 1.5s infinite alternate;
+        }
+
+        @keyframes blink {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .card h1 {
+            color: #d32f2f;
+            font-size: 2.5em;
+            margin: 0 0 10px;
+            animation: slideInFromLeft 1.5s forwards;
+        }
+
+        .card p {
+            color: #333;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            animation: fadeIn 2s forwards;
+        }
+
+        .card .holiday-message {
+            color: #388e3c;
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            animation: slideInFromRight 2s forwards;
+        }
+
+        .card .signature {
+            color: #999;
+            font-size: 1em;
+            animation: fadeIn 3s forwards;
+        }
+
+        /* Animaciones de los textos */
+        @keyframes slideInFromLeft {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromRight {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card h1 {
+                font-size: 2em;
+            }
+            .card p {
+                font-size: 1em;
+            }
+            .card .holiday-message {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Regalo que aparece primero -->
+<div class="gift" onclick="openCard()"></div>
+
+<!-- Tarjeta de Navidad -->
+<div class="card">
+    <div class="lights"></div>
+    <h1>¡Feliz Navidad!</h1>
+    <p>✨🎉Hospital San Jose🎉✨</p>
+    <p>✨Tuquerres✨</p>
+    <p>🎊Que esta Navidad esté llena de alegría, paz y momentos inolvidables🎊</p>
+    <p class="holiday-message">🎄Les deseamos un próspero y exitoso Año Nuevo🎄 <BR>🎄2025🎄</p>
+    <p class="signature">Con aprecio,<br><span>Ricardo Chamorro <br> Programador.... Compañero de Trabajo</span></p>
+    <audio id="christmas-sound" src="FELIZ.mp3" preload="auto"></audio>
+
+</div>
+
+<!-- Nieve -->
+<script>
+    function createSnowflake() {
+        const snowflake = document.createElement('div');
+        snowflake.classList.add('snowflake');
+        snowflake.style.left = $;{Math.random() * window.innerWidth}px;
+        snowflake.style.animationDuration = $;{Math.random() * 5 + 5}s; // Diferentes velocidades
+        snowflake.style.opacity = Math.random();
+        snowflake.style.width = $;{Math.random() * 10 + 5}px; // Diferentes tamaños
+        snowflake.style.height = snowflake.style.width;
+        document.body.appendChild(snowflake);
+
+        // Eliminar la nieve después de que caiga
+        setTimeout(() => {
+            snowflake.remove();
+        }, 10000);
+    }
+
+    setInterval(createSnowflake, 200);
+
+    // Función para abrir la tarjeta
+    function openCard() {
+        document.querySelector('.gift').classList.add('animate'); // Añadir animación al regalo
+        setTimeout(() => {
+            document.querySelector('.card').classList.add('show'); // Mostrar la tarjeta
+            document.querySelector('.gift').style.display = 'none'; // Ocultar el regalo
+        }, 1000);
+        document.getElementById('christmas-sound').play();
+    }
+</script>
+</body>
+</html>
